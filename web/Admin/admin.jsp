@@ -9,14 +9,44 @@
 <%@ page import="java.sql.*, javax.servlet.*, javax.servlet.http.*" %>
 
 <%
-    // Periksa sesi
-    HttpSession session = request.getSession(false);
+    // Mendapatkan sesi yang ada
     if (session == null || session.getAttribute("username") == null) {
         response.sendRedirect("login.jsp");
         return;
     }
 
     String username = (String) session.getAttribute("username");
+
+    // Koneksi ke database
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+
+    try {
+        String connectionURL = "jdbc:mysql://localhost/mie_rantau_jsp";
+        String usernameDB = "root";
+        String passwordDB = "";
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        connection = DriverManager.getConnection(connectionURL, usernameDB, passwordDB);
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery("SELECT * FROM product");
+
+        // Tampilkan produk
+        while (resultSet.next()) {
+            out.println("<p>" + resultSet.getString("nama") + "</p>");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 %>
 
 <!DOCTYPE html>
@@ -45,7 +75,7 @@
         ResultSet resultSet = null;
 
         try {
-            String connectionURL = "jdbc:mysql://localhost/mie_rantau";
+            String connectionURL = "jdbc:mysql://localhost/mie_rantau_jsp";
             String usernameDB = "root";
             String passwordDB = "";
 
@@ -93,5 +123,6 @@
         }
     }
 %>
+
 
 
