@@ -31,7 +31,7 @@
                     Class.forName("com.mysql.jdbc.Driver");
                     connection = DriverManager.getConnection(connectionURL, usernameDB, passwordDB);
                     statement = connection.createStatement();
-                    String query = "SELECT * FROM product WHERE jenis_id = 4";
+                    String query = "SELECT * FROM product WHERE produt";
                     resultSet = statement.executeQuery(query);
             %>
             <div class="d-flex justify-content-center">
