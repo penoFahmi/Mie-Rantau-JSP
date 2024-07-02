@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ReadExtras
-    Created on : 30 Jun 2024, 20.53.50
+    Document   : ReadProduct
+    Created on : 2 Jul 2024, 23.49.54
     Author     : Peno
 --%>
 
@@ -11,27 +11,27 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Read Extras</title>
+        <title>Read Dimsum</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
     <body>
         <div class="container">
             <h1 class="mt-4 text-center">Mie Rantau</h1>
-            <h2 class="m-3">Extra Tambahan</h2>
-            <a href="createExtras.jsp" type="button" class="m-3 btn btn-primary" >Tambah</a>
+            <h2 class="m-3">Dimsum</h2>
+            <a href="createDimsum.jsp" type="button" class="m-3 btn btn-primary" >Tambah</a>
             <% Connection connection = null;
                 Statement statement = null;
                 ResultSet resultSet = null;
                 
                 try {
-                    String connectionURL = "jdbc:mysql://localhost/mie_rantau";
+                    String connectionURL = "jdbc:mysql://localhost/mie_rantau_jsp";
                     String usernameDB = "root";
                     String passwordDB = "";
                     
                     Class.forName("com.mysql.jdbc.Driver");
                     connection = DriverManager.getConnection(connectionURL, usernameDB, passwordDB);
                     statement = connection.createStatement();
-                    String query = "SELECT * FROM extras";
+                    String query = "SELECT * FROM product WHERE jenis_id = 4";
                     resultSet = statement.executeQuery(query);
             %>
             <div class="d-flex justify-content-center">
@@ -39,7 +39,7 @@
                     <thead>
                         <tr class="table-primary">
                             <th scope="col">Nama</th>
-                            <th scope="col">Dikripsi</th>
+                            <th scope="col">Deskripsi</th>
                             <th scope="col">Harga</th>
                             <th scope="col">Photo</th>
                             <th scope="col">Edit</th>
@@ -48,14 +48,14 @@
                     <tbody>
                         <% while(resultSet.next()) { %>
                             <tr>
-                                <td><%= resultSet.getString("name") %></td>
-                                <td><%= resultSet.getString("description") %></td>
-                                <td>RP <%= resultSet.getString("price") %></td>
-                                <td><%= resultSet.getString("photo_url") %></td>
+                                <td><%= resultSet.getString("nama") %></td>
+                                <td><%= resultSet.getString("deskripsi") %></td>
+                                <td>RP <%= resultSet.getBigDecimal("harga") %></td>
+                                <td><img src="images/<%= resultSet.getString("photo") %>" alt="<%= resultSet.getString("nama") %>" style="width:100px;"/></td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="deleteExtras.jsp?ID=<%= resultSet.getString("id") %>" class="btn btn-danger">Delete</a>
-                                        <a href="updateExtras.jsp?ID=<%= resultSet.getString("id") %>" class="btn btn-warning">Update</a>
+                                        <a href="deleteDimsum.jsp?ID=<%= resultSet.getInt("id") %>" class="btn btn-danger">Delete</a>
+                                        <a href="updateDimsum.jsp?ID=<%= resultSet.getInt("id") %>" class="btn btn-warning">Update</a>
                                     </div>
                                 </td>
                             </tr>
@@ -71,3 +71,4 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 </html>
+
