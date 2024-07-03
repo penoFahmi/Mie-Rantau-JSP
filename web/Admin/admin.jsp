@@ -224,7 +224,28 @@
   <symbol id="search" viewBox="0 0 16 16">
     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
   </symbol>
-</svg>    
+</svg>  
+
+<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Company name</a>
+
+  <ul class="navbar-nav flex-row d-md-none">
+    <li class="nav-item text-nowrap">
+      <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
+        <svg class="bi"><use xlink:href="#search"/></svg>
+      </button>
+    </li>
+    <li class="nav-item text-nowrap">
+      <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <svg class="bi"><use xlink:href="#list"/></svg>
+      </button>
+    </li>
+  </ul>
+
+  <div id="navbarSearch" class="navbar-search w-100 collapse">
+    <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+  </div>
+</header>
     
     
     
@@ -237,8 +258,9 @@
     </div>
     -->
     
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="container-fluid">
+        <div class="row">
+                    <div class="d-flex justify-content-between align-items-center mt-4">
             <h1 class="text-center">Mie Rantau - Admin</h1>
             <a href="logout.jsp" class="btn btn-danger">Logout</a>
         </div>
@@ -287,6 +309,7 @@
                     displayProducts(out, "SELECT product.*, jenis_produk.nama_jenis FROM product JOIN jenis_produk ON product.jenis_id = jenis_produk.id WHERE jenis_produk.nama_jenis = 'dimsum'");
                 %>
             </div>
+        </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
