@@ -247,6 +247,17 @@
   </div>
 </header>
     
+    
+    
+    <!--<div class="sidebar">
+        <h4 class="text-center">Admin Menu</h4>
+        <a href="admin.jsp">Dashboard</a>
+        <a href="createProduct.jsp">Tambah Produk</a>
+        <a href="createCategory.jsp">Tambah Kategori</a>
+        <a href="logout.jsp">Logout</a>
+    </div>
+    -->
+    
     <div class="container-fluid">
         <div class="row">      
     <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
@@ -364,8 +375,7 @@
 
       <h2>Produk</h2>
      
-      <div class="d-flex justify-content-between align-items-center mt-4">
-        </div>
+      <!-- comment<div class="d-flex justify-content-between align-items-center mt-4"></div> -->
         <a href="createProduct.jsp" type="button" class="m-3 btn btn-primary">Tambah</a>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
