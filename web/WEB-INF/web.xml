@@ -16,4 +16,14 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
     
+    <servlet>
+    <servlet-name>createProduct</servlet-name>
+    <jsp-file>/Admin/createProduct.jsp</jsp-file>
+    </servlet>
+    
+    <servlet-mapping>
+    <servlet-name>createProduct</servlet-name>
+    <url-pattern>/Admin/createProduct.jsp</url-pattern>
+    </servlet-mapping>
+
 </web-app>

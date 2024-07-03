@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, javax.servlet.*, javax.servlet.http.*" %>
 
-
 <%
     if ("POST".equalsIgnoreCase(request.getMethod())) {
         String username = request.getParameter("username");
@@ -32,42 +31,12 @@
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                // Gunakan session yang sudah ada
+                //HttpSession session = request.getSession();
                 session.setAttribute("username", username);
-%>
-                <!-- Modal untuk login berhasil -->
-                <div class="modal fade" id="loginSuccessModal" tabindex="-1" aria-labelledby="loginSuccessModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="loginSuccessModalLabel">Login Berhasil</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Selamat datang, <%= username %>! Anda berhasil login.
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="window.location.href='admin.jsp'">OK</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Modal -->
-
-                <!-- Script untuk menampilkan modal secara otomatis -->
-                <script>
-                    $(document).ready(function() {
-                        $('#loginSuccessModal').modal('show');
-                    });
-                </script>
-<%
-                // Redirect ke halaman admin setelah menampilkan modal
                 response.sendRedirect("admin.jsp");
                 return;
             } else {
-                // Jika login gagal, redirect dengan parameter error
-                response.sendRedirect("login.jsp?error=1");
-                return;
+                request.setAttribute("error", "1");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,6 +61,7 @@
 </head>
 <body>
     <div class="container">
+        <div class="shadow-lg p-5 mt-5">
         <h1 class="mt-5">Admin Login</h1>
         <form action="login.jsp" method="post">
             <div class="mb-3">
@@ -107,11 +77,35 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
             <%
-                if (request.getParameter("error") != null) {
-                    out.println("<div class='mt-3 alert alert-danger'>Username atau password salah.</div>");
-                }
+                if (request.getAttribute("error") != null) {
             %>
+            <!-- Modal untuk login gagal -->
+            <div class="modal fade" id="loginErrorModal" tabindex="-1" aria-labelledby="loginErrorModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginErrorModalLabel">Login Gagal</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Username atau password salah.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Script untuk menampilkan modal login gagal -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var loginErrorModal = new bootstrap.Modal(document.getElementById('loginErrorModal'));
+                    loginErrorModal.show();
+                });
+            </script>
+            <% } %>
         </form>
+        </div> 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -127,3 +121,4 @@
     </script>
 </body>
 </html>
+
