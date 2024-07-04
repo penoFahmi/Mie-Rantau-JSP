@@ -29,13 +29,13 @@
     </servlet>
  
  
-     <servlet-mapping>
+    <servlet-mapping>
          <servlet-name>FileUploadHandler</servlet-name>
         <url-pattern>/FileUploadHandler/*</url-pattern>
     </servlet-mapping> 
     <servlet-mapping>
         <servlet-name>createProduct</servlet-name>
-        <url-pattern>/Admin/createProduct.jsp</url-pattern>
+        <url-pattern>/Admin/AddProduct.jsp</url-pattern>
     </servlet-mapping>
 
 </web-app>

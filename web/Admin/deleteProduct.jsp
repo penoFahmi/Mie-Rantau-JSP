@@ -5,13 +5,29 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@page import = "java.sql.*" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Delete Product</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%
+        String id = request.getParameter("id");
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String connectionURL = "jdbc:mysql://localhost/mie_rantau_jsp";
+            Connection connection = DriverManager.getConnection(connectionURL,
+        "root", "");
+            Statement statement = connection.createStatement();
+            int i = statement.executeUpdate("DELETE FROM product WHERE ID=" + id +
+        "");
+            response.sendRedirect("admin.jsp");
+        } catch (Exception e) {
+            response.sendRedirect("admin.jsp");
+        }
+        %>
     </body>
 </html>
