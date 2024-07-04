@@ -18,14 +18,24 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
     
-    <servlet>
-    <servlet-name>createProduct</servlet-name>
-    <jsp-file>/Admin/createProduct.jsp</jsp-file>
-    </servlet>
     
+    <servlet>
+        <servlet-name>createProduct</servlet-name>
+        <jsp-file>/Admin/createProduct.jsp</jsp-file>
+    </servlet>  
+     <servlet>
+        <servlet-name>FileUploadHandler</servlet-name>
+        <servlet-class>com.chilyfacts.com.FileUploadHandler</servlet-class>
+    </servlet>
+ 
+ 
+     <servlet-mapping>
+         <servlet-name>FileUploadHandler</servlet-name>
+        <url-pattern>/FileUploadHandler/*</url-pattern>
+    </servlet-mapping> 
     <servlet-mapping>
-    <servlet-name>createProduct</servlet-name>
-    <url-pattern>/Admin/createProduct.jsp</url-pattern>
+        <servlet-name>createProduct</servlet-name>
+        <url-pattern>/Admin/createProduct.jsp</url-pattern>
     </servlet-mapping>
 
 </web-app>
