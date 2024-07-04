@@ -20,11 +20,6 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
     <title>Admin Product</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="../css/dashboard.css" rel="stylesheet">
 </head>
 <body>
 
@@ -170,9 +165,7 @@
                 </form>
             </div>
         </main>
-                
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="../js/dropify.min.js"></script>           
+                      
         <script>
             $(document).ready(function() {
                 $('.dropify').dropify();

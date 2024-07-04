@@ -467,7 +467,16 @@
                 out.println("<td>" + resultSet.getString("nama") + "</td>");
                 out.println("<td>" + resultSet.getString("deskripsi") + "</td>");
                 out.println("<td>RP " + resultSet.getBigDecimal("harga") + "</td>");
-                out.println("<td><img src='images/" + resultSet.getString("photo") + "' alt='" + resultSet.getString("nama") + "' style='width:100px;'/></td>");
+
+                String photoFileName = resultSet.getString("photo");
+                if (photoFileName != null && !photoFileName.isEmpty()) {
+                    out.println("<td><img src='images/" + photoFileName + "' alt='" + resultSet.getString("nama") + "' style='width:100px;'/></td>");
+                } else {
+                    out.println("<td>No Image Available</td>");
+                }
+                //out.println("<td><img src='images/" + resultSet.getString("photo") + "' alt='" + resultSet.getString("nama") + "' style='width:100px;'/></td>");
+
+                
                 out.println("<td>" + resultSet.getString("nama_jenis") + "</td>");
                 out.println("<td>");
                 out.println("<div class='d-flex'>");

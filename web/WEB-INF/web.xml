@@ -20,8 +20,8 @@
     
     
     <servlet>
-        <servlet-name>createProduct</servlet-name>
-        <jsp-file>/Admin/createProduct.jsp</jsp-file>
+        <servlet-name>AddProduct</servlet-name>
+        <jsp-file>/Admin/AddProduct.jsp</jsp-file>
     </servlet>  
      <servlet>
         <servlet-name>FileUploadHandler</servlet-name>
@@ -34,7 +34,7 @@
         <url-pattern>/FileUploadHandler/*</url-pattern>
     </servlet-mapping> 
     <servlet-mapping>
-        <servlet-name>createProduct</servlet-name>
+        <servlet-name>AddProduct</servlet-name>
         <url-pattern>/Admin/AddProduct.jsp</url-pattern>
     </servlet-mapping>
 
