@@ -56,7 +56,7 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
+            <h1 class="welcome-text">Welcome, <span class="text-black fw-bold">Peno</span></h1>
             <h3 class="welcome-sub-text">Your performance summary this week </h3>
           </li>
         </ul>
@@ -389,21 +389,38 @@
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-          <li class="nav-item nav-category">UI Elements</li>
+          
+          <li class="nav-item nav-category">Aktivitas</li>     
+          
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon mdi mdi-floor-plan"></i>
-              <span class="menu-title">UI Elements</span>
-              <i class="menu-arrow"></i> 
+            <a class="nav-link" href="pages/forms/basic_elements.html">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Produk</span>
             </a>
-            <div class="collapse" id="ui-basic">
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#transaksi" aria-expanded="false" aria-controls="charts">
+              <i class="menu-icon mdi mdi-chart-line"></i>
+              <span class="menu-title">Transaksi</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="transaksi">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
               </ul>
             </div>
           </li>
+          
+          <li class="nav-item nav-category">Profile</li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/samples/login.html">
+              <i class="menu-icon mdi mdi-account-circle-outline"></i>
+              <span class="menu-title">Admin</span>
+            </a>
+          </li>
+          
+          
           <li class="nav-item nav-category">Forms and Datas</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
