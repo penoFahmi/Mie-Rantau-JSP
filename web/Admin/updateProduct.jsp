@@ -1,5 +1,5 @@
 <%-- 
-    Document   : createProduct
+    Document   : updateProduct
     Created on : 6 Jul 2024, 02.46.42
     Author     : Peno
 --%>
@@ -62,7 +62,7 @@
       <!-- partial -->
       <div class="main-panel">
         <!-- awal content -->  
-        <jsp:include page="pages/forms/form-add-product.jsp" />
+        <jsp:include page="pages/forms/form-update-product.jsp" />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <jsp:include page="partials/footer.jsp" />
