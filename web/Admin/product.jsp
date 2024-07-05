@@ -1,6 +1,6 @@
 <%-- 
-    Document   : admin
-    Created on : 6 Jul 2024, 02.46.42
+    Document   : product
+    Created on : 6 Jul 2024, 03.02.04
     Author     : Peno
 --%>
 
@@ -60,7 +60,7 @@
       <!-- partial -->
       <div class="main-panel">
         <!-- awal content -->  
-        <jsp:include page="pages/forms/forms.jsp" />
+        <jsp:include page="pages/tables/table-product.jsp" />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <jsp:include page="partials/footer.jsp" />

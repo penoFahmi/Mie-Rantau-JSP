@@ -7,7 +7,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="dashboard.jsp">
               <i class="mdi mdi-grid-large menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -16,7 +16,7 @@
           <li class="nav-item nav-category">Aktivitas</li>     
           
           <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
+            <a class="nav-link" href="product.jsp">
               <i class="menu-icon mdi mdi-table"></i>
               <span class="menu-title">Produk</span>
             </a>
@@ -30,7 +30,9 @@
             </a>
             <div class="collapse" id="transaksi">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
+                <li class="nav-item"> <a class="nav-link" href="dashboard.jsp">Buttons</a></li>
+                <li class="nav-item"> <a class="nav-link" href="dashboard.jsp">Dropdowns</a></li>
+                <li class="nav-item"> <a class="nav-link" href="dashboard.jsp">Typography</a></li>
               </ul>
             </div>
           </li>

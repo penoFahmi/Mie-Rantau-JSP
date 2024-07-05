@@ -12,10 +12,10 @@
           </button>
         </div>
         <div>
-          <a class="navbar-brand brand-logo" href="admin.jsp">
+          <a class="navbar-brand brand-logo" href="dashboard.jsp">
             <img src="images/logo.svg" alt="logo" />
           </a>
-          <a class="navbar-brand brand-logo-mini" href="admin.jsp">
+          <a class="navbar-brand brand-logo-mini" href="dashboard.jsp">
             <img src="images/logo-mini.svg" alt="logo" />
           </a>
         </div>
