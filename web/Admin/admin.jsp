@@ -1,502 +1,1243 @@
 <%-- 
     Document   : admin
-    Created on : 3 Jul 2024, 00.18.00
+    Created on : 5 Jul 2024, 21.42.05
     Author     : Peno
 --%>
 
 <%@page import="java.io.IOException"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, javax.servlet.*, javax.servlet.http.*" %>
-
-<%
-    //HttpSession session = request.getSession(false);
-    if (session == null || session.getAttribute("username") == null) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
-
-    String username = (String) session.getAttribute("username");
-%>
+<%@page import="java.util.List"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    
-    <script src="assets/js/color-modes.js"></script>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.122.0">
-    
-    <title>Admin Mie Rantau</title>
-    
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-      .b-example-divider {
-        width: 100%;
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
-
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
-
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
-
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .btn-bd-primary {
-        --bd-violet-bg: #712cf9;
-        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-        --bs-btn-font-weight: 600;
-        --bs-btn-color: var(--bs-white);
-        --bs-btn-bg: var(--bd-violet-bg);
-        --bs-btn-border-color: var(--bd-violet-bg);
-        --bs-btn-hover-color: var(--bs-white);
-        --bs-btn-hover-bg: #6528e0;
-        --bs-btn-hover-border-color: #6528e0;
-        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-        --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: #5a23c8;
-        --bs-btn-active-border-color: #5a23c8;
-      }
-
-      .bd-mode-toggle {
-        z-index: 1500;
-      }
-
-      .bd-mode-toggle .dropdown-menu .active .bi {
-        display: block !important;
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
-  </head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Admin Mie Rantau</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/feather/feather.css">
+  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="js/select.dataTables.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="images/favicon.png" />
+</head>
 <body>
-    
-    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-      <symbol id="check2" viewBox="0 0 16 16">
-        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-      </symbol>
-      <symbol id="circle-half" viewBox="0 0 16 16">
-        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-      </symbol>
-      <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-        <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
-      </symbol>
-      <symbol id="sun-fill" viewBox="0 0 16 16">
-        <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
-      </symbol>
-    </svg>
-    
-    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-      <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-              id="bd-theme"
-              type="button"
-              aria-expanded="false"
-              data-bs-toggle="dropdown"
-              aria-label="Toggle theme (auto)">
-        <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-            <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-            Light
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+  <div class="container-scroller"> 
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+            <span class="icon-menu"></span>
           </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-            <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-            Dark
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-            <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#circle-half"></use></svg>
-            Auto
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-      </ul>
-    </div>
-    
-    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-  <symbol id="calendar3" viewBox="0 0 16 16">
-    <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
-    <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-  </symbol>
-  <symbol id="cart" viewBox="0 0 16 16">
-    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-  </symbol>
-  <symbol id="chevron-right" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-  </symbol>
-  <symbol id="door-closed" viewBox="0 0 16 16">
-    <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
-    <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
-  </symbol>
-  <symbol id="file-earmark" viewBox="0 0 16 16">
-    <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
-  </symbol>
-  <symbol id="file-earmark-text" viewBox="0 0 16 16">
-    <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-    <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-  </symbol>
-  <symbol id="gear-wide-connected" viewBox="0 0 16 16">
-    <path d="M7.068.727c.243-.97 1.62-.97 1.864 0l.071.286a.96.96 0 0 0 1.622.434l.205-.211c.695-.719 1.888-.03 1.613.931l-.08.284a.96.96 0 0 0 1.187 1.187l.283-.081c.96-.275 1.65.918.931 1.613l-.211.205a.96.96 0 0 0 .434 1.622l.286.071c.97.243.97 1.62 0 1.864l-.286.071a.96.96 0 0 0-.434 1.622l.211.205c.719.695.03 1.888-.931 1.613l-.284-.08a.96.96 0 0 0-1.187 1.187l.081.283c.275.96-.918 1.65-1.613.931l-.205-.211a.96.96 0 0 0-1.622.434l-.071.286c-.243.97-1.62.97-1.864 0l-.071-.286a.96.96 0 0 0-1.622-.434l-.205.211c-.695.719-1.888.03-1.613-.931l.08-.284a.96.96 0 0 0-1.186-1.187l-.284.081c-.96.275-1.65-.918-.931-1.613l.211-.205a.96.96 0 0 0-.434-1.622l-.286-.071c-.97-.243-.97-1.62 0-1.864l.286-.071a.96.96 0 0 0 .434-1.622l-.211-.205c-.719-.695-.03-1.888.931-1.613l.284.08a.96.96 0 0 0 1.187-1.186l-.081-.284c-.275-.96.918-1.65 1.613-.931l.205.211a.96.96 0 0 0 1.622-.434l.071-.286zM12.973 8.5H8.25l-2.834 3.779A4.998 4.998 0 0 0 12.973 8.5zm0-1a4.998 4.998 0 0 0-7.557-3.779l2.834 3.78h4.723zM5.048 3.967c-.03.021-.058.043-.087.065l.087-.065zm-.431.355A4.984 4.984 0 0 0 3.002 8c0 1.455.622 2.765 1.615 3.678L7.375 8 4.617 4.322zm.344 7.646.087.065-.087-.065z"/>
-  </symbol>
-  <symbol id="graph-up" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"/>
-  </symbol>
-  <symbol id="house-fill" viewBox="0 0 16 16">
-    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
-    <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
-  </symbol>
-  <symbol id="list" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-  </symbol>
-  <symbol id="people" viewBox="0 0 16 16">
-    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/>
-  </symbol>
-  <symbol id="plus-circle" viewBox="0 0 16 16">
-    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-  </symbol>
-  <symbol id="puzzle" viewBox="0 0 16 16">
-    <path d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .039-.063v-.009a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003a.214.214 0 0 0-.039-.064.859.859 0 0 0-.27-.193C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.039.063v.003l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238l-.244-2.855zM4.605 3a.5.5 0 0 0-.498.55l.001.007.29 3.4A.5.5 0 0 1 3.9 7.5h-.782c-.696 0-1.182-.497-1.469-.872a.459.459 0 0 0-.118-.115.112.112 0 0 0-.025-.012L1.5 6.5h-.003a.213.213 0 0 0-.064.039.86.86 0 0 0-.193.27C1.1 7.09 1 7.51 1 8c0 .491.1.912.24 1.19.07.14.14.225.194.271a.213.213 0 0 0 .063.039H1.5l.006-.001a.112.112 0 0 0 .025-.012.459.459 0 0 0 .118-.115c.287-.375.773-.872 1.469-.872H3.9a.5.5 0 0 1 .498.542l-.29 3.408a.5.5 0 0 0 .497.55h1.878c-.048-.166-.195-.352-.463-.557-.274-.21-.52-.528-.52-.943 0-.568.447-.947.862-1.154C6.807 10.123 7.387 10 8 10s1.193.123 1.638.346c.415.207.862.586.862 1.154 0 .415-.246.733-.52.943-.268.205-.415.39-.463.557h1.878a.5.5 0 0 0 .498-.55l-.001-.007-.29-3.4A.5.5 0 0 1 12.1 8.5h.782c.696 0 1.182.497 1.469.872.05.065.091.099.118.115.013.008.021.01.025.012a.02.02 0 0 0 .006.001h.003a.214.214 0 0 0 .064-.039.86.86 0 0 0 .193-.27c.14-.28.24-.7.24-1.191 0-.492-.1-.912-.24-1.19a.86.86 0 0 0-.194-.271.215.215 0 0 0-.063-.039H14.5l-.006.001a.113.113 0 0 0-.025.012.459.459 0 0 0-.118.115c-.287.375-.773.872-1.469.872H12.1a.5.5 0 0 1-.498-.543l.29-3.407a.5.5 0 0 0-.497-.55H9.517c.048.166.195.352.463.557.274.21.52.528.52.943 0 .568-.447.947-.862 1.154C9.193 5.877 8.613 6 8 6s-1.193-.123-1.638-.346C5.947 5.447 5.5 5.068 5.5 4.5c0-.415.246-.733.52-.943.268-.205.415-.39.463-.557H4.605z"/>
-  </symbol>
-  <symbol id="search" viewBox="0 0 16 16">
-    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-  </symbol>
-</svg>  
-
-<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Mie Rantau</a>
-
-  <ul class="navbar-nav flex-row d-md-none">
-    <li class="nav-item text-nowrap">
-      <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
-        <svg class="bi"><use xlink:href="#search"/></svg>
-      </button>
-    </li>
-    <li class="nav-item text-nowrap">
-      <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <svg class="bi"><use xlink:href="#list"/></svg>
-      </button>
-    </li>
-  </ul>
-
-  <div id="navbarSearch" class="navbar-search w-100 collapse">
-    <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
-  </div>
-</header>
-    
-    
-    
-    <!--<div class="sidebar">
-        <h4 class="text-center">Admin Menu</h4>
-        <a href="admin.jsp">Dashboard</a>
-        <a href="createProduct.jsp">Tambah Produk</a>
-        <a href="createCategory.jsp">Tambah Kategori</a>
-        <a href="logout.jsp">Logout</a>
-    </div>
-    -->
-    
-    <div class="container-fluid">
-        <div class="row">      
-    <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
-      <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="sidebarMenuLabel">Company name</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
-                <svg class="bi"><use xlink:href="#house-fill"/></svg>
-                Dashboard
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#file-earmark"/></svg>
-                Orders
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#cart"/></svg>
-                Products
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#people"/></svg>
-                Customers
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#graph-up"/></svg>
-                Reports
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#puzzle"/></svg>
-                Integrations
-              </a>
-            </li>
-          </ul>
-
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-            <span>Saved reports</span>
-            <a class="link-secondary" href="#" aria-label="Add a new report">
-              <svg class="bi"><use xlink:href="#plus-circle"/></svg>
-            </a>
-          </h6>
-          <ul class="nav flex-column mb-auto">
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
-                Current month
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
-                Last quarter
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
-                Social engagement
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
-                Year-end sale
-              </a>
-            </li>
-          </ul>
-
-          <hr class="my-3">
-
-          <ul class="nav flex-column mb-auto">
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#gear-wide-connected"/></svg>
-                Settings
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="logout.jsp">
-                <svg class="bi"><use xlink:href="#door-closed"/></svg>
-                Sign out
-              </a>
-            </li>
-          </ul>
+        <div>
+          <a class="navbar-brand brand-logo" href="admin.jsp">
+            <img src="images/logo.svg" alt="logo" />
+          </a>
+          <a class="navbar-brand brand-logo-mini" href="admin.jsp">
+            <img src="images/logo-mini.svg" alt="logo" />
+          </a>
         </div>
       </div>
-    </div>
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-            <svg class="bi"><use xlink:href="#calendar3"/></svg>
-            This week
-          </button>
-        </div>
-      </div>
-
-      <h2>Produk</h2>
-     
-      <!-- comment<div class="d-flex justify-content-between align-items-center mt-4"></div> -->
-        <a href="AddProduct.jsp" type="button" class="m-3 btn btn-primary">Tambah</a>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">Semua</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="makanan-tab" data-bs-toggle="tab" data-bs-target="#makanan" type="button" role="tab" aria-controls="makanan" aria-selected="false">Makanan</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="minuman-tab" data-bs-toggle="tab" data-bs-target="#minuman" type="button" role="tab" aria-controls="minuman" aria-selected="false">Minuman</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="extra-tab" data-bs-toggle="tab" data-bs-target="#extra" type="button" role="tab" aria-controls="extra" aria-selected="false">Extra</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="dimsum-tab" data-bs-toggle="tab" data-bs-target="#dimsum" type="button" role="tab" aria-controls="dimsum" aria-selected="false">Dimsum</button>
-            </li>
+      <div class="navbar-menu-wrapper d-flex align-items-top"> 
+        <ul class="navbar-nav">
+          <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
+            <h3 class="welcome-sub-text">Your performance summary this week </h3>
+          </li>
         </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-                <%
-                    displayProducts(out, "SELECT product.*, jenis_produk.nama_jenis FROM product JOIN jenis_produk ON product.jenis_id = jenis_produk.id");
-                %>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown d-none d-lg-block">
+            <a class="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false"> Select Category </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
+              <a class="dropdown-item py-3" >
+                <p class="mb-0 font-weight-medium float-left">Select category</p>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">Bootstrap Bundle </p>
+                  <p class="fw-light small-text mb-0">This is a Bundle featuring 16 unique dashboards</p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">Angular Bundle</p>
+                  <p class="fw-light small-text mb-0">Everything you’ll ever need for your Angular projects</p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">VUE Bundle</p>
+                  <p class="fw-light small-text mb-0">Bundle of 6 Premium Vue Admin Dashboard</p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">React Bundle</p>
+                  <p class="fw-light small-text mb-0">Bundle of 8 Premium React Admin Dashboard</p>
+                </div>
+              </a>
             </div>
-            <div class="tab-pane fade" id="makanan" role="tabpanel" aria-labelledby="makanan-tab">
-                <%
-                    displayProducts(out, "SELECT product.*, jenis_produk.nama_jenis FROM product JOIN jenis_produk ON product.jenis_id = jenis_produk.id WHERE jenis_produk.nama_jenis = 'makanan'");
-                %>
+          </li>
+          <li class="nav-item d-none d-lg-block">
+            <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
+              <span class="input-group-addon input-group-prepend border-right">
+                <span class="icon-calendar input-group-text calendar-icon"></span>
+              </span>
+              <input type="text" class="form-control">
             </div>
-            <div class="tab-pane fade" id="minuman" role="tabpanel" aria-labelledby="minuman-tab">
-                <%
-                    displayProducts(out, "SELECT product.*, jenis_produk.nama_jenis FROM product JOIN jenis_produk ON product.jenis_id = jenis_produk.id WHERE jenis_produk.nama_jenis = 'minuman'");
-                %>
+          </li>
+          <li class="nav-item">
+            <form class="search-form" action="#">
+              <i class="icon-search"></i>
+              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+            </form>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+              <i class="icon-mail icon-lg"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
+              <a class="dropdown-item py-3 border-bottom">
+                <p class="mb-0 font-weight-medium float-left">You have 4 new notifications </p>
+                <span class="badge badge-pill badge-primary float-right">View all</span>
+              </a>
+              <a class="dropdown-item preview-item py-3">
+                <div class="preview-thumbnail">
+                  <i class="mdi mdi-alert m-auto text-primary"></i>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject fw-normal text-dark mb-1">Application Error</h6>
+                  <p class="fw-light small-text mb-0"> Just now </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item py-3">
+                <div class="preview-thumbnail">
+                  <i class="mdi mdi-settings m-auto text-primary"></i>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject fw-normal text-dark mb-1">Settings</h6>
+                  <p class="fw-light small-text mb-0"> Private message </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item py-3">
+                <div class="preview-thumbnail">
+                  <i class="mdi mdi-airballoon m-auto text-primary"></i>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject fw-normal text-dark mb-1">New user registration</h6>
+                  <p class="fw-light small-text mb-0"> 2 days ago </p>
+                </div>
+              </a>
             </div>
-            <div class="tab-pane fade" id="extra" role="tabpanel" aria-labelledby="extra-tab">
-                <%
-                    displayProducts(out, "SELECT product.*, jenis_produk.nama_jenis FROM product JOIN jenis_produk ON product.jenis_id = jenis_produk.id WHERE jenis_produk.nama_jenis = 'extra'");
-                %>
+          </li>
+          <li class="nav-item dropdown"> 
+            <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="icon-bell"></i>
+              <span class="count"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="countDropdown">
+              <a class="dropdown-item py-3">
+                <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
+                <span class="badge badge-pill badge-primary float-right">View all</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
+                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
+                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
+                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
+                </div>
+              </a>
             </div>
-            <div class="tab-pane fade" id="dimsum" role="tabpanel" aria-labelledby="dimsum-tab">
-                <%
-                    displayProducts(out, "SELECT product.*, jenis_produk.nama_jenis FROM product JOIN jenis_produk ON product.jenis_id = jenis_produk.id WHERE jenis_produk.nama_jenis = 'dimsum'");
-                %>
+          </li>
+          <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image"> </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+              <div class="dropdown-header text-center">
+                <img class="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
+                <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
+                <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+              </div>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
             </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border me-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border me-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
         </div>
-      
-    </main>
-            
-            
+      </div>
+      <div id="right-sidebar" class="settings-panel">
+        <i class="settings-close ti-close"></i>
+        <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="todo-tab" data-bs-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="chats-tab" data-bs-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="setting-content">
+          <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+            <div class="add-items d-flex px-3 mb-0">
+              <form class="form w-100">
+                <div class="form-group d-flex">
+                  <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                  <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="list-wrapper px-3">
+              <ul class="d-flex flex-column-reverse todo-list">
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Team review meeting at 3.00 PM
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Prepare for presentation
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Resolve all the low priority tickets due today
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Schedule meeting for next week
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Project review
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+              </ul>
+            </div>
+            <h4 class="px-3 text-muted mt-5 fw-light mb-0">Events</h4>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary me-2"></i>
+                <span>Feb 11 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Creating component page build a js</p>
+              <p class="text-gray mb-0">The total number of sessions</p>
+            </div>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary me-2"></i>
+                <span>Feb 7 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
+              <p class="text-gray mb-0 ">Call Sarah Graves</p>
+            </div>
+          </div>
+          <!-- To do section tab ends -->
+          <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+            <div class="d-flex align-items-center justify-content-between border-bottom">
+              <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+              <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 fw-normal">See All</small>
+            </div>
+            <ul class="chat-list">
+              <li class="list active">
+                <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Thomas Douglas</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">19 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <div class="wrapper d-flex">
+                    <p>Catherine</p>
+                  </div>
+                  <p>Away</p>
+                </div>
+                <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                <small class="text-muted my-auto">23 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Daniel Russell</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">14 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <p>James Richardson</p>
+                  <p>Away</p>
+                </div>
+                <small class="text-muted my-auto">2 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Madeline Kennedy</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">5 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Sarah Graves</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">47 min</small>
+              </li>
+            </ul>
+          </div>
+          <!-- chat tab ends -->
         </div>
+      </div>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="mdi mdi-grid-large menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item nav-category">UI Elements</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="menu-icon mdi mdi-floor-plan"></i>
+              <span class="menu-title">UI Elements</span>
+              <i class="menu-arrow"></i> 
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item nav-category">Forms and Datas</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+              <i class="menu-icon mdi mdi-card-text-outline"></i>
+              <span class="menu-title">Form elements</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+              <i class="menu-icon mdi mdi-chart-line"></i>
+              <span class="menu-title">Charts</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Tables</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+              <i class="menu-icon mdi mdi-layers-outline"></i>
+              <span class="menu-title">Icons</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item nav-category">pages</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="menu-icon mdi mdi-account-circle-outline"></i>
+              <span class="menu-title">User Pages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item nav-category">help</li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://bootstrapdash.com/demo/star-admin2-free/docs/documentation.html">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Documentation</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="home-tab">
+                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#audiences" role="tab" aria-selected="false">Audiences</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#demographics" role="tab" aria-selected="false">Demographics</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab" aria-selected="false">More</a>
+                    </li>
+                  </ul>
+                  <div>
+                    <div class="btn-wrapper">
+                      <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
+                      <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
+                      <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-content tab-content-basic">
+                  <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="statistics-details d-flex align-items-center justify-content-between">
+                          <div>
+                            <p class="statistics-title">Bounce Rate</p>
+                            <h3 class="rate-percentage">32.53%</h3>
+                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
+                          </div>
+                          <div>
+                            <p class="statistics-title">Page Views</p>
+                            <h3 class="rate-percentage">7,682</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p>
+                          </div>
+                          <div>
+                            <p class="statistics-title">New Sessions</p>
+                            <h3 class="rate-percentage">68.8</h3>
+                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
+                          </div>
+                          <div class="d-none d-md-block">
+                            <p class="statistics-title">Avg. Time on Site</p>
+                            <h3 class="rate-percentage">2m:35s</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>
+                          </div>
+                          <div class="d-none d-md-block">
+                            <p class="statistics-title">New Sessions</p>
+                            <h3 class="rate-percentage">68.8</h3>
+                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
+                          </div>
+                          <div class="d-none d-md-block">
+                            <p class="statistics-title">Avg. Time on Site</p>
+                            <h3 class="rate-percentage">2m:35s</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                    <div class="row">
+                      <div class="col-lg-8 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                   <h4 class="card-title card-title-dash">Performance Line Chart</h4>
+                                   <h5 class="card-subtitle card-subtitle-dash">Lorem Ipsum is simply dummy text of the printing</h5>
+                                  </div>
+                                  <div id="performance-line-legend"></div>
+                                </div>
+                                <div class="chartjs-wrapper mt-5">
+                                  <canvas id="performaneLine"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                            <div class="card bg-primary card-rounded">
+                              <div class="card-body pb-0">
+                                <h4 class="card-title card-title-dash text-white mb-4">Status Summary</h4>
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <p class="status-summary-ight-white mb-1">Closed Value</p>
+                                    <h2 class="text-info">357</h2>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <div class="status-summary-chart-wrapper pb-4">
+                                      <canvas id="status-summary"></canvas>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-sm-6">
+                                    <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
+                                      <div class="circle-progress-width">
+                                        <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
+                                      </div>
+                                      <div>
+                                        <p class="text-small mb-2">Total Visitors</p>
+                                        <h4 class="mb-0 fw-bold">26.80%</h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <div class="circle-progress-width">
+                                        <div id="visitperday" class="progressbar-js-circle pr-2"></div>
+                                      </div>
+                                      <div>
+                                        <p class="text-small mb-2">Visits per day</p>
+                                        <h4 class="mb-0 fw-bold">9065</h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-8 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                    <h4 class="card-title card-title-dash">Market Overview</h4>
+                                   <p class="card-subtitle card-subtitle-dash">Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+                                  </div>
+                                  <div>
+                                    <div class="dropdown">
+                                      <button class="btn btn-secondary dropdown-toggle toggle-dark btn-lg mb-0 me-0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> This month </button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                        <h6 class="dropdown-header">Settings</h6>
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Separated link</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="d-sm-flex align-items-center mt-1 justify-content-between">
+                                  <div class="d-sm-flex align-items-center mt-4 justify-content-between"><h2 class="me-2 fw-bold">$36,2531.00</h2><h4 class="me-2">USD</h4><h4 class="text-success">(+1.37%)</h4></div>
+                                  <div class="me-3"><div id="marketing-overview-legend"></div></div>
+                                </div>
+                                <div class="chartjs-bar-wrapper mt-3">
+                                  <canvas id="marketingOverview"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded table-darkBGImg">
+                              <div class="card-body">
+                                <div class="col-sm-8">
+                                  <h3 class="text-white upgrade-info mb-0">
+                                    Enhance your <span class="fw-bold">Campaign</span> for better outreach
+                                  </h3>
+                                  <a href="#" class="btn btn-info upgrade-btn">Upgrade Account!</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                    <h4 class="card-title card-title-dash">Pending Requests</h4>
+                                   <p class="card-subtitle card-subtitle-dash">You have 50+ new requests</p>
+                                  </div>
+                                  <div>
+                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new member</button>
+                                  </div>
+                                </div>
+                                <div class="table-responsive  mt-1">
+                                  <table class="table select-table">
+                                    <thead>
+                                      <tr>
+                                        <th>
+                                          <div class="form-check form-check-flat mt-0">
+                                            <label class="form-check-label">
+                                              <input type="checkbox" class="form-check-input" aria-checked="false"><i class="input-helper"></i></label>
+                                          </div>
+                                        </th>
+                                        <th>Customer</th>
+                                        <th>Company</th>
+                                        <th>Progress</th>
+                                        <th>Status</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <div class="form-check form-check-flat mt-0">
+                                            <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" aria-checked="false"><i class="input-helper"></i></label>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div class="d-flex ">
+                                            <img src="images/faces/face1.jpg" alt="">
+                                            <div>
+                                              <h6>Brandon Washington</h6>
+                                              <p>Head admin</p>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <h6>Company name 1</h6>
+                                          <p>company type</p>
+                                        </td>
+                                        <td>
+                                          <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-1 max-width-progress-wrap">
+                                              <p class="text-success">79%</p>
+                                              <p>85/162</p>
+                                            </div>
+                                            <div class="progress progress-md">
+                                              <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td><div class="badge badge-opacity-warning">In progress</div></td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <div class="form-check form-check-flat mt-0">
+                                            <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" aria-checked="false"><i class="input-helper"></i></label>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div class="d-flex">
+                                            <img src="images/faces/face2.jpg" alt="">
+                                            <div>
+                                              <h6>Laura Brooks</h6>
+                                              <p>Head admin</p>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <h6>Company name 1</h6>
+                                          <p>company type</p>
+                                        </td>
+                                        <td>
+                                          <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-1 max-width-progress-wrap">
+                                              <p class="text-success">65%</p>
+                                              <p>85/162</p>
+                                            </div>
+                                            <div class="progress progress-md">
+                                              <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td><div class="badge badge-opacity-warning">In progress</div></td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <div class="form-check form-check-flat mt-0">
+                                            <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" aria-checked="false"><i class="input-helper"></i></label>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div class="d-flex">
+                                            <img src="images/faces/face3.jpg" alt="">
+                                            <div>
+                                              <h6>Wayne Murphy</h6>
+                                              <p>Head admin</p>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <h6>Company name 1</h6>
+                                          <p>company type</p>
+                                        </td>
+                                        <td>
+                                          <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-1 max-width-progress-wrap">
+                                              <p class="text-success">65%</p>
+                                              <p>85/162</p>
+                                            </div>
+                                            <div class="progress progress-md">
+                                              <div class="progress-bar bg-warning" role="progressbar" style="width: 38%" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td><div class="badge badge-opacity-warning">In progress</div></td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <div class="form-check form-check-flat mt-0">
+                                            <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" aria-checked="false"><i class="input-helper"></i></label>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div class="d-flex">
+                                            <img src="images/faces/face4.jpg" alt="">
+                                            <div>
+                                              <h6>Matthew Bailey</h6>
+                                              <p>Head admin</p>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <h6>Company name 1</h6>
+                                          <p>company type</p>
+                                        </td>
+                                        <td>
+                                          <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-1 max-width-progress-wrap">
+                                              <p class="text-success">65%</p>
+                                              <p>85/162</p>
+                                            </div>
+                                            <div class="progress progress-md">
+                                              <div class="progress-bar bg-danger" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td><div class="badge badge-opacity-danger">Pending</div></td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <div class="form-check form-check-flat mt-0">
+                                            <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" aria-checked="false"><i class="input-helper"></i></label>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div class="d-flex">
+                                            <img src="images/faces/face5.jpg" alt="">
+                                            <div>
+                                              <h6>Katherine Butler</h6>
+                                              <p>Head admin</p>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <h6>Company name 1</h6>
+                                          <p>company type</p>
+                                        </td>
+                                        <td>
+                                          <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-1 max-width-progress-wrap">
+                                              <p class="text-success">65%</p>
+                                              <p>85/162</p>
+                                            </div>
+                                            <div class="progress progress-md">
+                                              <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td><div class="badge badge-opacity-success">Completed</div></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row flex-grow">
+                          <div class="col-md-6 col-lg-6 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body card-rounded">
+                                <h4 class="card-title  card-title-dash">Recent Events</h4>
+                                <div class="list align-items-center border-bottom py-2">
+                                  <div class="wrapper w-100">
+                                    <p class="mb-2 font-weight-medium">
+                                      Change in Directors
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <div class="d-flex align-items-center">
+                                        <i class="mdi mdi-calendar text-muted me-1"></i>
+                                        <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="list align-items-center border-bottom py-2">
+                                  <div class="wrapper w-100">
+                                    <p class="mb-2 font-weight-medium">
+                                      Other Events
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <div class="d-flex align-items-center">
+                                        <i class="mdi mdi-calendar text-muted me-1"></i>
+                                        <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="list align-items-center border-bottom py-2">
+                                  <div class="wrapper w-100">
+                                    <p class="mb-2 font-weight-medium">
+                                      Quarterly Report
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <div class="d-flex align-items-center">
+                                        <i class="mdi mdi-calendar text-muted me-1"></i>
+                                        <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="list align-items-center border-bottom py-2">
+                                  <div class="wrapper w-100">
+                                    <p class="mb-2 font-weight-medium">
+                                      Change in Directors
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <div class="d-flex align-items-center">
+                                        <i class="mdi mdi-calendar text-muted me-1"></i>
+                                        <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <div class="list align-items-center pt-3">
+                                  <div class="wrapper w-100">
+                                    <p class="mb-0">
+                                      <a href="#" class="fw-bold text-primary">Show all <i class="mdi mdi-arrow-right ms-2"></i></a>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-6 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                  <h4 class="card-title card-title-dash">Activities</h4>
+                                  <p class="mb-0">20 finished, 5 remaining</p>
+                                </div>
+                                <ul class="bullet-line-list">
+                                  <li>
+                                    <div class="d-flex justify-content-between">
+                                      <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
+                                      <p>Just now</p>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="d-flex justify-content-between">
+                                      <div><span class="text-light-green">Oliver Noah</span> assign you a task</div>
+                                      <p>1h</p>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="d-flex justify-content-between">
+                                      <div><span class="text-light-green">Jack William</span> assign you a task</div>
+                                      <p>1h</p>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="d-flex justify-content-between">
+                                      <div><span class="text-light-green">Leo Lucas</span> assign you a task</div>
+                                      <p>1h</p>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="d-flex justify-content-between">
+                                      <div><span class="text-light-green">Thomas Henry</span> assign you a task</div>
+                                      <p>1h</p>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="d-flex justify-content-between">
+                                      <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
+                                      <p>1h</p>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="d-flex justify-content-between">
+                                      <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
+                                      <p>1h</p>
+                                    </div>
+                                  </li>
+                                </ul>
+                                <div class="list align-items-center pt-3">
+                                  <div class="wrapper w-100">
+                                    <p class="mb-0">
+                                      <a href="#" class="fw-bold text-primary">Show all <i class="mdi mdi-arrow-right ms-2"></i></a>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <h4 class="card-title card-title-dash">Todo list</h4>
+                                      <div class="add-items d-flex mb-0">
+                                        <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
+                                        <button class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p"><i class="mdi mdi-plus"></i></button>
+                                      </div>
+                                    </div>
+                                    <div class="list-wrapper">
+                                      <ul class="todo-list todo-list-rounded">
+                                        <li class="d-block">
+                                          <div class="form-check w-100">
+                                            <label class="form-check-label">
+                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
+                                            </label>
+                                            <div class="d-flex mt-2">
+                                              <div class="ps-4 text-small me-3">24 June 2020</div>
+                                              <div class="badge badge-opacity-warning me-3">Due tomorrow</div>
+                                              <i class="mdi mdi-flag ms-2 flag-color"></i>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="d-block">
+                                          <div class="form-check w-100">
+                                            <label class="form-check-label">
+                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
+                                            </label>
+                                            <div class="d-flex mt-2">
+                                              <div class="ps-4 text-small me-3">23 June 2020</div>
+                                              <div class="badge badge-opacity-success me-3">Done</div>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div class="form-check w-100">
+                                            <label class="form-check-label">
+                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
+                                            </label>
+                                            <div class="d-flex mt-2">
+                                              <div class="ps-4 text-small me-3">24 June 2020</div>
+                                              <div class="badge badge-opacity-success me-3">Done</div>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="border-bottom-0">
+                                          <div class="form-check w-100">
+                                            <label class="form-check-label">
+                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
+                                            </label>
+                                            <div class="d-flex mt-2">
+                                              <div class="ps-4 text-small me-3">24 June 2020</div>
+                                              <div class="badge badge-opacity-danger me-3">Expired</div>
+                                            </div>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                      <h4 class="card-title card-title-dash">Type By Amount</h4>
+                                    </div>
+                                    <canvas class="my-auto" id="doughnutChart" height="200"></canvas>
+                                    <div id="doughnut-chart-legend" class="mt-5 text-center"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                      <div>
+                                        <h4 class="card-title card-title-dash">Leave Report</h4>
+                                      </div>
+                                      <div>
+                                        <div class="dropdown">
+                                          <button class="btn btn-secondary dropdown-toggle toggle-dark btn-lg mb-0 me-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Month Wise </button>
+                                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                            <h6 class="dropdown-header">week Wise</h6>
+                                            <a class="dropdown-item" href="#">Year Wise</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="mt-3">
+                                      <canvas id="leaveReport"></canvas>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                      <div>
+                                        <h4 class="card-title card-title-dash">Top Performer</h4>
+                                      </div>
+                                    </div>
+                                    <div class="mt-3">
+                                      <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                        <div class="d-flex">
+                                          <img class="img-sm rounded-10" src="images/faces/face1.jpg" alt="profile">
+                                          <div class="wrapper ms-3">
+                                            <p class="ms-1 mb-1 fw-bold">Brandon Washington</p>
+                                            <small class="text-muted mb-0">162543</small>
+                                          </div>
+                                        </div>
+                                        <div class="text-muted text-small">
+                                          1h ago
+                                        </div>
+                                      </div>
+                                      <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                        <div class="d-flex">
+                                          <img class="img-sm rounded-10" src="images/faces/face2.jpg" alt="profile">
+                                          <div class="wrapper ms-3">
+                                            <p class="ms-1 mb-1 fw-bold">Wayne Murphy</p>
+                                            <small class="text-muted mb-0">162543</small>
+                                          </div>
+                                        </div>
+                                        <div class="text-muted text-small">
+                                          1h ago
+                                        </div>
+                                      </div>
+                                      <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                        <div class="d-flex">
+                                          <img class="img-sm rounded-10" src="images/faces/face3.jpg" alt="profile">
+                                          <div class="wrapper ms-3">
+                                            <p class="ms-1 mb-1 fw-bold">Katherine Butler</p>
+                                            <small class="text-muted mb-0">162543</small>
+                                          </div>
+                                        </div>
+                                        <div class="text-muted text-small">
+                                          1h ago
+                                        </div>
+                                      </div>
+                                      <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                        <div class="d-flex">
+                                          <img class="img-sm rounded-10" src="images/faces/face4.jpg" alt="profile">
+                                          <div class="wrapper ms-3">
+                                            <p class="ms-1 mb-1 fw-bold">Matthew Bailey</p>
+                                            <small class="text-muted mb-0">162543</small>
+                                          </div>
+                                        </div>
+                                        <div class="text-muted text-small">
+                                          1h ago
+                                        </div>
+                                      </div>
+                                      <div class="wrapper d-flex align-items-center justify-content-between pt-2">
+                                        <div class="d-flex">
+                                          <img class="img-sm rounded-10" src="images/faces/face5.jpg" alt="profile">
+                                          <div class="wrapper ms-3">
+                                            <p class="ms-1 mb-1 fw-bold">Rafell John</p>
+                                            <small class="text-muted mb-0">Alaska, USA</small>
+                                          </div>
+                                        </div>
+                                        <div class="text-muted text-small">
+                                          1h ago
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
     </div>
-    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="vendors/chart.js/Chart.min.js"></script>
+  <script src="vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="vendors/progressbar.js/progressbar.min.js"></script>
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/hoverable-collapse.js"></script>
+  <script src="js/template.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="js/dashboard.js"></script>
+  <script src="js/Chart.roundedBarCharts.js"></script>
+  <!-- End custom js for this page-->
 </body>
+
 </html>
-
-<%! 
-    private void displayProducts(JspWriter out, String query) throws IOException {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            String connectionURL = "jdbc:mysql://localhost/mie_rantau_jsp";
-            String usernameDB = "root";
-            String passwordDB = "";
-
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(connectionURL, usernameDB, passwordDB);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
-
-            out.println("<div class='d-flex justify-content-center'>");
-            out.println("<table class='table table-shadow-lg table-striped'>");
-            out.println("<thead>");
-            out.println("<tr class='table-primary'>");
-            out.println("<th scope='col'>Nama</th>");
-            out.println("<th scope='col'>Deskripsi</th>");
-            out.println("<th scope='col'>Harga</th>");
-            out.println("<th scope='col'>Foto</th>");
-            out.println("<th scope='col'>Kategori</th>");
-            out.println("<th scope='col'>Edit</th>");
-            out.println("</tr>");
-            out.println("</thead>");
-            out.println("<tbody>");
-
-            while (resultSet.next()) {
-                out.println("<tr>");
-                out.println("<td>" + resultSet.getString("nama") + "</td>");
-                out.println("<td>" + resultSet.getString("deskripsi") + "</td>");
-                out.println("<td>RP " + resultSet.getBigDecimal("harga") + "</td>");
-
-                String photoFileName = resultSet.getString("photo");
-                if (photoFileName != null && !photoFileName.isEmpty()) {
-                    out.println("<td><img src='images/" + photoFileName + "' alt='" + resultSet.getString("nama") + "' style='width:100px;'/></td>");
-                } else {
-                    out.println("<td>No Image Available</td>");
-                }
-                //out.println("<td><img src='images/" + resultSet.getString("photo") + "' alt='" + resultSet.getString("nama") + "' style='width:100px;'/></td>");
-
-                
-                out.println("<td>" + resultSet.getString("nama_jenis") + "</td>");
-                out.println("<td>");
-                out.println("<div class='d-flex'>");
-                out.println("<a href='deleteProduct.jsp?id=" + resultSet.getInt("id") + "' class='btn btn-danger'>Delete</a>");
-                out.println("<a href='updateProduct.jsp?id=" + resultSet.getInt("id") + "' class='btn btn-warning'>Update</a>");
-                out.println("</div>");
-                out.println("</td>");
-                out.println("</tr>");
-            }
-
-            out.println("</tbody>");
-            out.println("</table>");
-            out.println("</div>");
-
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-%>
 
