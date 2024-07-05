@@ -33,7 +33,7 @@
             if (resultSet.next()) {
                 //HttpSession session = request.getSession();
                 session.setAttribute("username", username);
-                response.sendRedirect("admin.jsp");
+                response.sendRedirect("dashboard.jsp");
                 return;
             } else {
                 request.setAttribute("error", "1");
