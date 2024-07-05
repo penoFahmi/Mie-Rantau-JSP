@@ -37,7 +37,7 @@
           
           <li class="nav-item nav-category">Profile</li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/samples/login.html">
+            <a class="nav-link" href="admin.jsp">
               <i class="menu-icon mdi mdi-account-circle-outline"></i>
               <span class="menu-title">Admin</span>
             </a>
