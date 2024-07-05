@@ -1,4 +1,10 @@
-<div class="theme-setting-wrapper">
+<%-- 
+    Document   : settings_panel
+    Created on : 6 Jul 2024, 01.48.11
+    Author     : Peno
+--%>
+
+      <div class="theme-setting-wrapper">
         <div id="settings-trigger"><i class="ti-settings"></i></div>
         <div id="theme-settings" class="settings-panel">
           <i class="settings-close ti-close"></i>
