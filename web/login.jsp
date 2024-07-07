@@ -4,33 +4,19 @@
     Author     : Peno
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*, javax.servlet.*, javax.servlet.http.*" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Login Mie Rantau</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="Admin/vendors/feather/feather.css">
-  <link rel="stylesheet" href="Admin/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="Admin/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="Admin/vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="Admin/vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="Admin/vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="Admin/vendors/select2/select2.min.css">
-  <link rel="stylesheet" href="Admin/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="Admin/css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="Admin/images/favicon.png" />
-</head>    
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login Mie Rantau</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Your custom styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
 <body>
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -43,7 +29,7 @@
                             </div>
                             <h4>Hello! let's get started</h4>
                             <h6 class="fw-light">Sign in to continue.</h6>
-                            <form class="pt-3" method="POST" action="LoginServlet">
+                            <form class="pt-3" method="POST" action="login.jsp">
                                 <%@page session="true" %>
                                 <% 
                                     if (session.getAttribute("username") != null && session.getAttribute("role_id") != null) {
