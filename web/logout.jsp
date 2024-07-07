@@ -6,9 +6,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="javax.servlet.http.HttpSession" %>
+
 <!DOCTYPE html>
 <%
-    //HttpSession session = request.getSession();
-    session.invalidate();  // Mengakhiri sesi
+    //HttpSession session = request.getSession(false); // Mengambil sesi yang ada atau null jika tidak ada
+    if (session != null) {
+        session.invalidate();  // Mengakhiri sesi
+    }
     response.sendRedirect("login.jsp");  // Mengarahkan kembali ke halaman login
 %>

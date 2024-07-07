@@ -60,7 +60,7 @@
                     out.println("<td>");
                     out.println("<div>");
                     out.println("<button class='btn btn-danger' data-toggle='modal' data-target='#deleteModal' data-id='" + resultSet.getInt("id") + "'>Delete</button>");
-                    out.println("<a href='createProduct.jsp?id=" + resultSet.getInt("id") + "' class='btn btn-warning'>Update</a>");
+                    out.println("<a href='updateProduct.jsp?id=" + resultSet.getInt("id") + "' class='btn btn-warning'>Update</a>");
                     out.println("</div>");
                     out.println("</td>");
                     out.println("</tr>");
