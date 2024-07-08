@@ -4,6 +4,7 @@
     Author     : Peno
 --%>
 
+<%@page import = "javax.swing.*" %>
 <%@page import="java.util.UUID"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Iterator"%>
@@ -20,117 +21,104 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Add Product</h4>
-                <p class="card-description">
-                    Basic form layout
-                </p>
+                <h4 class="card-title">Tambah Product</h4>
+                <p class="card-description">Basic form layout</p>
                 <form class="forms-sample" action="createProduct.jsp" method="post" enctype="multipart/form-data">
                     <%
-                        String message = null;
                         if ("POST".equalsIgnoreCase(request.getMethod())) {
                             String jenisId = null, nama = null, deskripsi = null, harga = null, photo = null, photoPath = null;
 
                             boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-                            if (!isMultipart) {
-                                out.println("File Not Uploaded");
-                            } else {
+                            if (isMultipart) {
                                 FileItemFactory factory = new DiskFileItemFactory();
                                 ServletFileUpload upload = new ServletFileUpload(factory);
 
-                                List<FileItem> fields = upload.parseRequest(request);
-                                Iterator<FileItem> it = fields.iterator();
+                                try {
+                                    List<FileItem> fields = upload.parseRequest(request);
+                                    Iterator<FileItem> it = fields.iterator();
 
-                                while (it.hasNext()) {
-                                    FileItem fileItem = it.next();
-                                    if (fileItem.isFormField()) {
-                                        String fieldName = fileItem.getFieldName();
-                                        String fieldValue = fileItem.getString();
-                                        switch (fieldName) {
-                                            case "selectJenisProduk":
-                                                jenisId = fieldValue;
-                                                break;
-                                            case "inputNama":
-                                                nama = fieldValue;
-                                                break;
-                                            case "inputDeskripsi":
-                                                deskripsi = fieldValue;
-                                                break;
-                                            case "inputHarga":
-                                                harga = fieldValue;
-                                                break;
+                                    while (it.hasNext()) {
+                                        FileItem fileItem = it.next();
+                                        if (fileItem.isFormField()) {
+                                            String fieldName = fileItem.getFieldName();
+                                            String fieldValue = fileItem.getString();
+                                            switch (fieldName) {
+                                                case "selectJenisProduk":
+                                                    jenisId = fieldValue;
+                                                    break;
+                                                case "inputNama":
+                                                    nama = fieldValue;
+                                                    break;
+                                                case "inputDeskripsi":
+                                                    deskripsi = fieldValue;
+                                                    break;
+                                                case "inputHarga":
+                                                    harga = fieldValue;
+                                                    break;
+                                            }
+                                        } else {
+                                            if (fileItem.getFieldName().equals("inputImage") && fileItem.getSize() > 0) {
+                                                String uploadPath = "C:\\Users\\Peno\\Documents\\4 sem\\PWL\\MieRantau\\web\\Admin\\images";
+                                                File uploadDir = new File(uploadPath);
+                                                if (!uploadDir.exists()) {
+                                                    uploadDir.mkdirs(); // Create the directory if it does not exist
+                                                }
+
+                                                String originalFileName = new File(fileItem.getName()).getName();
+                                                String fileExtension = "";
+                                                int dotIndex = originalFileName.lastIndexOf('.');
+                                                if (dotIndex > 0) {
+                                                    fileExtension = originalFileName.substring(dotIndex);
+                                                }
+
+                                                String uuid = UUID.randomUUID().toString();
+                                                String newFileName = originalFileName.substring(0, dotIndex) + "_" + uuid + fileExtension;
+
+                                                photo = uploadPath + "\\" + newFileName;
+                                                File uploadedFile = new File(photo);
+                                                fileItem.write(uploadedFile);
+                                                photoPath = "images\\" + newFileName;
+                                            }
+                                        }
+                                    }
+
+                                    if (jenisId != null && nama != null && deskripsi != null && harga != null && photoPath != null) {
+                                        Connection connection = null;
+                                        PreparedStatement statementInput = null;
+                                        try {
+                                            connection = DriverManager.getConnection("jdbc:mysql://localhost/mie_rantau_jsp", "root", "");
+                                            String query = "INSERT INTO product (jenis_id, nama, deskripsi, harga, photo) values (?, ?, ?, ?, ?)";
+                                            statementInput = connection.prepareStatement(query);
+                                            statementInput.setString(1, jenisId);
+                                            statementInput.setString(2, nama);
+                                            statementInput.setString(3, deskripsi);
+                                            statementInput.setString(4, harga);
+                                            statementInput.setString(5, photoPath);
+
+                                            int updateQuery = statementInput.executeUpdate();
+                                            
+                                            if (updateQuery != 0) {
+                                                response.sendRedirect("product.jsp");
+                                            } else {
+                                                out.println("Gagal menambahkan produk.");
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace(out);
+                                            out.println("Error: " + e.getMessage());
+                                        } finally {
+                                            if (statementInput != null) statementInput.close();
+                                            if (connection != null) connection.close();
                                         }
                                     } else {
-                                        if (fileItem.getFieldName().equals("inputImage") && fileItem.getSize() > 0) {
-                                            String uploadPath = "C:\\Users\\Peno\\Documents\\4 sem\\PWL\\MieRantau\\web\\Admin\\images";
-                                            File uploadDir = new File(uploadPath);
-                                            if (!uploadDir.exists()) {
-                                                uploadDir.mkdirs(); // Create the directory if it does not exist
-                                            }
-
-                                            String originalFileName = new File(fileItem.getName()).getName();
-                                            String fileExtension = "";
-                                            int dotIndex = originalFileName.lastIndexOf('.');
-                                            if (dotIndex > 0) {
-                                                fileExtension = originalFileName.substring(dotIndex);
-                                            }
-
-                                            String uuid = UUID.randomUUID().toString();
-                                            String newFileName = originalFileName.substring(0, dotIndex) + "_" + uuid + fileExtension;
-
-                                            photo = uploadPath + "\\" + newFileName;
-                                            File uploadedFile = new File(photo);
-                                            fileItem.write(uploadedFile);
-                                            photoPath = "images\\" + newFileName;
-                                        }
+                                        out.println("Pastikan semua field diisi dengan benar.");
                                     }
-                                }
-                                if (jenisId != null && nama != null && deskripsi != null && harga != null && photoPath != null) {
-                                    try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/mie_rantau_jsp", "root", "")) {
-                                        String query = "INSERT INTO product (jenis_id, nama, deskripsi, harga, photo) values (?, ?, ?, ?, ?)";
-                                        PreparedStatement statementInput = connection.prepareStatement(query);
-                                        statementInput.setString(1, jenisId);
-                                        statementInput.setString(2, nama);
-                                        statementInput.setString(3, deskripsi);
-                                        statementInput.setString(4, harga);
-                                        statementInput.setString(5, photoPath);
-
-                                        int updateQuery = statementInput.executeUpdate();
-                                        if (updateQuery != 0) {
-                                            // Redirect to product.jsp
-                                            response.sendRedirect("product.jsp"); // Tambahkan baris ini
-                                            return; // Tambahkan return untuk menghentikan eksekusi lebih lanjut
-                                        } else {
-                                            message = "Failed to add product. Please try again.";
-                                        }
-                                    } catch (SQLException e) {
-                                        message = "Database connection or query execution error: " + e.getMessage();
-                                    }
-                                } else {
-                                    message = "Missing required form fields or file upload failed.";
+                                } catch (Exception e) {
+                                    e.printStackTrace(out);
+                                    out.println("Error: " + e.getMessage());
                                 }
                             }
                         }
                     %>
-
-                    <!-- Modal Error -->
-                    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <%= message %>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label for="selectJenisProduk">Jenis Produk</label>
@@ -155,9 +143,11 @@
                             <option value="<%= resultSet.getString("id") %>"><%= resultSet.getString("nama_jenis") %></option>
                             <%
                                     }
-                                    resultSet.close(); statement.close(); connection.close();
+                                    resultSet.close();
+                                    statement.close();
+                                    connection.close();
                                 } catch( Exception e){
-                                    out.println(e.getMessage());
+                                    out.println("Error fetching product types: " + e.getMessage());
                                 }
                             %>
                         </select>
@@ -184,7 +174,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary me-2">Submit</button>
-                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#errorModal">Cancel</button>
+                    <a href="product.jsp" type="button" class="btn btn-light">Cancel</a>
                 </form>
             </div>
         </div>
@@ -201,10 +191,5 @@
 <script>
     $(document).ready(function() {
         $('.dropify').dropify();
-
-        // If message is not null, show the error modal
-        <% if (message != null) { %>
-            $('#errorModal').modal('show');
-        <% } %>
     });
 </script>

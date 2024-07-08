@@ -199,7 +199,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button type="reset" class="btn btn-light">Cancel</button>
+                    <a href="product.jsp" type="reset" class="btn btn-light">Cancel</a>
                 </form>
             </div>
         </div>
@@ -215,12 +215,3 @@
 <!-- Include Dropify JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropify/0.2.2/js/dropify.min.js"></script>
 
-<script>
-    $(document).ready(function(){
-        $('.dropify').dropify();
-
-        <% if (message != null) { %>
-        $('#errorModal').modal('show');
-        <% } %>
-    });
-</script>
