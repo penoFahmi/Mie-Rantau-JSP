@@ -9,7 +9,7 @@
 <%@ page import="java.sql.*, javax.servlet.*, javax.servlet.http.*" %>
 <%@page import="java.util.List"%>
 
-<%
+<%--<%
     //HttpSession session = request.getSession(false);
     if (session == null || session.getAttribute("username") == null) {
         response.sendRedirect("login.jsp");
@@ -18,8 +18,24 @@
 
     String username = (String) session.getAttribute("username");
 
-%>
+%>--%>
+<%
+    // Mengecek apakah pengguna sudah login dan memiliki role_id yang sesuai
+    if (session.getAttribute("username") == null || session.getAttribute("role_id") == null) {
+        response.sendRedirect("../login.jsp");
+        return;
+    }
 
+    // Mendapatkan username dan role_id dari sesi
+    String username = (String) session.getAttribute("username");
+    int role_id = (Integer) session.getAttribute("role_id");
+
+    // Pengecekan apakah role_id adalah 1
+    if (role_id != 1) {
+        response.sendRedirect("../login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 

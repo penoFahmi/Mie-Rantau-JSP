@@ -5,6 +5,24 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="javax.servlet.*, javax.servlet.http.*" %>
+<%
+    // Mengecek apakah pengguna sudah login dan memiliki role_id yang sesuai
+    if (session.getAttribute("username") == null || session.getAttribute("role_id") == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    // Mendapatkan username dan role_id dari sesi
+    String username = (String) session.getAttribute("username");
+    int role_id = (Integer) session.getAttribute("role_id");
+
+    // Pengecekan apakah role_id adalah 3
+    if (role_id != 3) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
