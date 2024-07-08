@@ -19,7 +19,6 @@
     String username = (String) session.getAttribute("username");
 
 %> --%>
-<%@ page import="javax.servlet.*, javax.servlet.http.*" %>
 <%
     // Mengecek apakah pengguna sudah login dan memiliki role_id yang sesuai
     if (session.getAttribute("username") == null || session.getAttribute("role_id") == null) {
@@ -61,7 +60,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="../img/favicon.ico" />>
 </head>
 <body>
   <div class="container-scroller"> 

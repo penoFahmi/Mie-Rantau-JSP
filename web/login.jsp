@@ -24,7 +24,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="Admin/css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="Admin/images/favicon.png" />
+  <link rel="shortcut icon" href="img/favicon.ico" />
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
 </head>
@@ -177,7 +177,7 @@
                   <button type="submit" class="btn btn-primary btn-lg font-weight-medium auth-form-btn">Masuk</button>
                 </div>
                 <div class="text-center mt-4 fw-light">
-                  Don't have an account? <a href="register.html" class="text-primary">Create</a>
+                  Don't have an account? <a href="register.jsp" class="text-primary">Create</a>
                 </div>
                 <% if (!errorMessage.isEmpty()) { %>
                   <script>

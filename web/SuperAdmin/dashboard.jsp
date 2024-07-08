@@ -59,7 +59,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="../img/favicon.ico" />
 </head>
 <body>
   <div class="container-scroller"> 
@@ -74,7 +74,7 @@
       <jsp:include page="partials/sidebar.jsp" /> 
       <!-- partial -->
       <div class="main-panel">
-        <jsp:include page="pages/icons/mdi.jsp" />
+          <!-- Isi Konten -->
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <jsp:include page="partials/footer.jsp" />

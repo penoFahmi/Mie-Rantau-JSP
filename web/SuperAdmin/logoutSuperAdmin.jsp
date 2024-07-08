@@ -1,6 +1,6 @@
 <%-- 
-    Document   : logoutAdmin
-    Created on : 8 Jul 2024, 11.21.57
+    Document   : logoutSuperAdmin
+    Created on : 8 Jul 2024, 11.31.30
     Author     : Peno
 --%>
 
@@ -12,7 +12,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logout Admin</title>
+  <title>Logout Super Admin</title>
 </head>
 <body>
 <%
@@ -25,8 +25,8 @@
         Integer role_id = (Integer) session.getAttribute("role_id");
         
         // Mengecek apakah role_id sesuai dengan yang diinginkan untuk logout
-        if (role_id != null && role_id == 2) {
-            session.invalidate();  // Mengakhiri sesi hanya untuk role_id 2
+        if (role_id != null && role_id == 1) {
+            session.invalidate();  // Mengakhiri sesi hanya untuk role_id 1
         }
     }
     // Mengarahkan kembali ke halaman login

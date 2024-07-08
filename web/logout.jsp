@@ -9,9 +9,19 @@
 
 <!DOCTYPE html>
 <%
-    //HttpSession session = request.getSession(false); // Mengambil sesi yang ada atau null jika tidak ada
+    // Mengambil sesi yang ada
+    //HttpSession session = request.getSession(false);
+    
+    // Mengecek apakah sesi tidak null
     if (session != null) {
-        session.invalidate();  // Mengakhiri sesi
+        // Mendapatkan role_id dari sesi
+        Integer role_id = (Integer) session.getAttribute("role_id");
+        
+        // Mengecek apakah role_id sesuai dengan yang diinginkan untuk logout
+        if (role_id != null && role_id == 3) {
+            session.invalidate();  // Mengakhiri sesi hanya untuk role_id 3
+        }
     }
-    response.sendRedirect("login.jsp");  // Mengarahkan kembali ke halaman login
+    // Mengarahkan kembali ke halaman login
+    response.sendRedirect("login.jsp");
 %>
