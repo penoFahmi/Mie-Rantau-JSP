@@ -4,21 +4,24 @@
     Author     : Peno
 --%>
 
-<%@page import="java.io.IOException"%>
+<%@page import = "javax.swing.*" %>
+<%@page import="java.util.UUID"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*, javax.servlet.*, javax.servlet.http.*" %>
+<%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
+<%@page import="java.sql.*" %>
+<%@page import="java.io.File, java.io.IOException, java.io.PrintWriter, javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.commons.fileupload.FileItem, org.apache.commons.fileupload.FileItemFactory, org.apache.commons.fileupload.disk.DiskFileItemFactory, org.apache.commons.fileupload.servlet.ServletFileUpload" %>
 
 <%--<%
     //HttpSession session = request.getSession(false);
     if (session == null || session.getAttribute("username") == null) {
-        response.sendRedirect("../login.jsp");
+        response.sendRedirect("login.jsp");
         return;
     }
 
     String username = (String) session.getAttribute("username");
 
-%> --%>
+%>--%>
 <%
     // Mengecek apakah pengguna sudah login dan memiliki role_id yang sesuai
     if (session.getAttribute("username") == null || session.getAttribute("role_id") == null) {
@@ -60,7 +63,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="../img/favicon.ico" />>
+  <link rel="shortcut icon" href="../img/favicon.ico" />
 </head>
 <body>
   <div class="container-scroller"> 
@@ -75,7 +78,8 @@
       <jsp:include page="partials/sidebar.jsp" /> 
       <!-- partial -->
       <div class="main-panel">
-          
+        <!-- awal content -->  
+        <jsp:include page="pages/tables/basic-table.jsp" />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <jsp:include page="partials/footer.jsp" />

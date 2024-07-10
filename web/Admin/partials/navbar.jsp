@@ -4,35 +4,6 @@
     Author     : Peno
 --%>
 
-<style>
-    /* Tambahkan ini ke dalam bagian <style> atau file CSS Anda */
-    .navbar {
-        background-color: #f46a06;
-    }
-
-    .navbar .nav-link,
-    .navbar .navbar-brand,
-    .navbar .navbar-toggler,
-    .navbar .navbar-menu-wrapper .welcome-text,
-    .navbar .navbar-menu-wrapper .welcome-sub-text {
-        color: #ffffff;
-    }
-
-    .navbar .nav-link:hover,
-    .navbar .nav-link:focus {
-        color: #ffffff;
-        text-decoration: none;
-    }
-
-    .navbar .dropdown-menu .dropdown-item {
-        color: #000000;
-    }
-
-    .navbar .dropdown-menu .dropdown-item:hover {
-        background-color: #f46a06;
-        color: #ffffff;
-    }
-</style>
 
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
