@@ -30,9 +30,9 @@
             </a>
             <div class="collapse" id="transaksi">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="penjualan.jsp">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="Pembelian.jsp">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="makan.jsp">Typography</a></li>
+                <li class="nav-item"> <a class="nav-link" href="penjualan.jsp">satus</a></li>
+                <li class="nav-item"> <a class="nav-link" href="Pembelian.jsp">dua</a></li>
+                <li class="nav-item"> <a class="nav-link" href="makan.jsp">tiga</a></li>
               </ul>
             </div>
           </li>

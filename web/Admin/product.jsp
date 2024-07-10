@@ -70,7 +70,7 @@
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
-      <jsp:include page="partials/setting_panel.jsp" />     
+     <jsp:include page="partials/setting_panel.jsp" />   
       <!-- partial -->
       <!-- partial:partials/_sidebar.html -->
       <jsp:include page="partials/sidebar.jsp" /> 
