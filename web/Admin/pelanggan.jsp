@@ -1,6 +1,6 @@
 <%-- 
-    Document   : dashboard
-    Created on : 5 Jul 2024, 21.42.05
+    Document   : pelanggan
+    Created on : 11 Jul 2024, 12.33.37
     Author     : Peno
 --%>
 
@@ -79,7 +79,7 @@
       <!-- partial -->
       <div class="main-panel">
         <!-- awal content -->  
-        <jsp:include page="pages/charts/donat-product.jsp" />
+        <jsp:include page="pages/tables/table-pelanggan.jsp" />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <jsp:include page="partials/footer.jsp" />
@@ -114,4 +114,5 @@
 </body>
 
 </html>
+
 

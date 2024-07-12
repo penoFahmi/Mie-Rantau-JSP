@@ -37,7 +37,7 @@
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="brand-logo">
-                  <h1>Mie Rantau</h1>
+                  <h1><a href="index.html">Mie Rantau</a></h1>
               </div>
               <h4>Selamat datang di mie rantau</h4>
               <h6 class="fw-light">login untuk melanjutkan.</h6>
@@ -145,10 +145,10 @@
                                         redirectUrl = "Admin/dashboard.jsp";
                                         break;
                                     case 3:
-                                        redirectUrl = "index.jsp";
+                                        redirectUrl = "Pembelian/menu.jsp";
                                         break;
                                     default:
-                                        redirectUrl = "index.jsp";
+                                        redirectUrl = "Pembelian/menu.jsp";
                                         break;
                                 }
                                 response.sendRedirect(redirectUrl);

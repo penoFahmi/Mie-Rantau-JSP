@@ -52,7 +52,7 @@
                         <p class="mb-1 mt-3 font-weight-semibold">Peno</p>
                         <p class="fw-light text-muted mb-0">penofahmi@gmail.com</p>
                     </div>
-                    <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile</a>
+                    <a href="admin.jsp" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile</a>
                     <a href="logoutAdmin.jsp" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
                 </div>
             </li>

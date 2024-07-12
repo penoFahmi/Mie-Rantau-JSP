@@ -1,154 +1,15 @@
 <%-- 
-    Document   : index
-    Created on : 7 Jul 2024, 21.57.01
+    Document   : footer
+    Created on : 11 Jul 2024, 13.08.40
     Author     : Peno
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="javax.servlet.*, javax.servlet.http.*" %>
-<%
-    // Mengecek apakah pengguna sudah login dan memiliki role_id yang sesuai
-    if (session.getAttribute("username") == null || session.getAttribute("role_id") == null) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
-
-    // Mendapatkan username dan role_id dari sesi
-    String username = (String) session.getAttribute("username");
-    int role_id = (Integer) session.getAttribute("role_id");
-
-    // Pengecekan apakah role_id adalah 3
-    if (role_id != 3) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
-%>
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home</title>
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      integrity="sha384-XJpS1nf79viuLZXFr3hht5d6c5cFO0ntea4Z46RrQ/cd3gG2aLoo6I9xH2bg2zIS"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow-lg">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">Mie<span>Rantau</span></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="index.html">Home</a>
-            <a class="nav-link" href="about.html">Tentang Kami</a>
-            <a class="nav-link" href="menu.html">Menu</a>
-            <a class="nav-link" href="contact.html">Kontak</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <!-- Akhir Navbar -->
-
-    <!-- Konten 1 -->
-    <section class="py-4" id="index">
-      <div class="container index">
-        <div class="row gx-5">
-          <div class="col-sm-6 col-md-8">
-            <div class="text-start p-3">
-              <h1 class="display-4">
-                mie pedas paling nikmat!!! <br />
-                MIE RANTAU
-              </h1>
-              <p class="lead">
-                Selamat datang di dunia rasa yang tak terlupakan. Mie Rantau
-                menghadirkan hidangan mie yang luar biasa untuk Anda. Kami
-                adalah pilihan terbaik bagi pecinta mie yang mencari pengalaman
-                kuliner yang unik dan istimewa.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Akhir Konten 1 -->
-
-    <!-- Konten 2 -->
-    <aside class="container bg-body-secondary shadow-lg mb-5 p-5 mt-5">
-      <h1 class="text-center">Produk</h1>
-      <div class="container px-4 text-center">
-        <div class="row gx-5 justify-content-center">
-          <div class="col-md-4">
-            <div class="p-3">
-              <div class="card">
-                <img src="img/icon.png" class="card-img-top" alt="product1" />
-                <div class="card-body">
-                  <p class="card-text">Makanan.</p>
-                  <a href="menu.html">view more...</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="p-3">
-              <div class="card">
-                <img src="img/icon2.jpg" class="card-img-top" alt="product2" />
-                <div class="card-body">
-                  <p class="card-text">Minuman.</p>
-                  <a href="menu.html">view more...</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="p-3">
-              <div class="card">
-                <img src="img/icon3.webp" class="card-img-top" alt="product3" />
-                <div class="card-body">
-                  <p class="card-text">Extra.</p>
-                  <a href="menu.html">view more...</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </aside>
-    <!-- Akhir Konten 2 -->
-    <audio autoplay loop src="audio/"></audio>
-    <!-- Footer -->
-    <footer class="w-100 py-4 flex-shrink-0">
+<footer class="w-100 py-4 flex-shrink-0">
       <div class="container py-4">
         <div class="row gy-4 gx-5">
           <div class="col-lg-4 col-md-6 none">
             <h5 class="h3 text-white">
-              <a href="index.html">Mie <span>Rantau.</span></a>
+              <a href="../index.html">Mie <span>Rantau.</span></a>
             </h5>
             <p class="small text-muted">
               Mie Rantau, kelezatan pedas yang tak tertandingi. Rasakan keunikan
@@ -268,12 +129,3 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         </div>
       </div>
     </footer>
-    <!-- Footer Akhir -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
-

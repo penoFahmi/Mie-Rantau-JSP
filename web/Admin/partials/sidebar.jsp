@@ -30,11 +30,18 @@
             </a>
             <div class="collapse" id="transaksi">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="penjualan.jsp">satus</a></li>
+                <li class="nav-item"> <a class="nav-link" href="penjualan.jsp">Pemesanan</a></li>
                 <li class="nav-item"> <a class="nav-link" href="Pembelian.jsp">dua</a></li>
                 <li class="nav-item"> <a class="nav-link" href="makan.jsp">tiga</a></li>
               </ul>
             </div>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="pelanggan.jsp">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Pelanggan</span>
+            </a>
           </li>
           
           <li class="nav-item nav-category">Profile</li>
