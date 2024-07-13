@@ -15,6 +15,7 @@
   <title>Logout Admin</title>
 </head>
 <body>
+<!DOCTYPE html>
 <%
     // Mengambil sesi yang ada
     //HttpSession session = request.getSession(false);
@@ -26,7 +27,8 @@
         
         // Mengecek apakah role_id sesuai dengan yang diinginkan untuk logout
         if (role_id != null && role_id == 2) {
-            session.invalidate();  // Mengakhiri sesi hanya untuk role_id 2
+            session.removeAttribute("username"); // Hapus atribut username dari sesi
+            session.removeAttribute("role_id");  // Hapus atribut role_id dari sesi
         }
     }
     // Mengarahkan kembali ke halaman login

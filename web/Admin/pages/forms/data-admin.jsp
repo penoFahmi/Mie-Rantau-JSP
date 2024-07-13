@@ -26,10 +26,6 @@
     <div class="row">
         <div class="grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Data Admin</h4>
-                    <p class="card-description">Selamat datang....</p>
-                    <div class="forms-sample">
                         <% 
                             while(resultSet.next()) { 
                                 String id = resultSet.getString("id");
@@ -39,6 +35,11 @@
                                 String no_telepon = resultSet.getString("no_tlp");
                                 String alamat = resultSet.getString("alamat");
                         %>
+                <div class="card-body">
+                    <h4 class="card-title">Data Admin</h4>
+                    <p class="card-description">Selamat datang <%= nama %></p>
+                    <div class="forms-sample">
+
                         <div class="form-group">
                             <label for="exampleInputUsername1">Nama</label>
                             <input type="text" class="form-control" id="exampleInputUsername1" value="<%= nama %>" readonly>

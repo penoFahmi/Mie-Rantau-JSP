@@ -26,11 +26,12 @@
         
         // Mengecek apakah role_id sesuai dengan yang diinginkan untuk logout
         if (role_id != null && role_id == 1) {
-            session.invalidate();  // Mengakhiri sesi hanya untuk role_id 1
+            session.removeAttribute("username"); // Hapus atribut username dari sesi
+            session.removeAttribute("role_id");  // Hapus atribut role_id dari sesi
         }
     }
     // Mengarahkan kembali ke halaman login
-    response.sendRedirect("../login.jsp");
+    response.sendRedirect("login.jsp");
 %>
 </body>
 </html>

@@ -1,8 +1,9 @@
 <%-- 
-    Document   : menu
-    Created on : 11 Jul 2024, 13.06.32
+    Document   : keranjang
+    Created on : 13 Jul 2024, 23.17.13
     Author     : Peno
 --%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="javax.servlet.*, javax.servlet.http.*" %>
@@ -81,7 +82,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
     <!-- Konten 1 -->
     <!-- Akhir Konten 1 -->
-    <jsp:include page="actions/daftar-product.jsp"/>
+    <jsp:include page="actions/proses-add-keranjang.jsp"/>
     <!-- Konten 2 -->
     <!-- Akhir Konten 2 -->
     <audio autoplay loop src="audio/"></audio>

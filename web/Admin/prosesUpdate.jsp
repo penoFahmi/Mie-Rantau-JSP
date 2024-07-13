@@ -18,7 +18,7 @@
     String photo = null;
 
     // Define the upload path for images
-    String uploadPath = getServletContext().getRealPath("") + File.separator + "Admin" + File.separator + "images" + File.separator;
+    String uploadPath = "C:\\Users\\Peno\\Documents\\4 sem\\PWL\\MieRantau\\web\\Admin\\images";
 
     boolean isMultipart = ServletFileUpload.isMultipartContent(request);
     if (isMultipart) {
@@ -60,10 +60,10 @@
                     String uuid = UUID.randomUUID().toString();
                     String newFileName = fileName.substring(0, dotIndex) + "_" + uuid + fileExtension;
 
-                    File uploadedFile = new File(uploadPath + newFileName);
+                    File uploadedFile = new File(uploadPath + File.separator + newFileName);
                     item.write(uploadedFile);
 
-                    photo = "Admin/images/" + newFileName;
+                    photo = "images\\" + newFileName;
                 }
             }
         }
@@ -104,7 +104,7 @@
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {
                 if (oldPhotoPath != null && !oldPhotoPath.equals(photo)) {
-                    File oldFile = new File(getServletContext().getRealPath("") + File.separator + oldPhotoPath);
+                    File oldFile = new File(uploadPath + File.separator + oldPhotoPath);
                     if (oldFile.exists()) {
                         oldFile.delete();
                     }
@@ -129,4 +129,5 @@
         out.println("Product ID is missing.");
     }
 %>
+
 

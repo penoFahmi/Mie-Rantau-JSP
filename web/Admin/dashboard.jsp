@@ -22,7 +22,7 @@
     String username = (String) session.getAttribute("username");
 
 %>--%>
-<%
+<%--
     // Mengecek apakah pengguna sudah login dan memiliki role_id yang sesuai
     if (session.getAttribute("username") == null || session.getAttribute("role_id") == null) {
         response.sendRedirect("../login.jsp");
@@ -31,6 +31,22 @@
 
     // Mendapatkan username dan role_id dari sesi
     String username = (String) session.getAttribute("username");
+    int role_id = (Integer) session.getAttribute("role_id");
+
+    // Pengecekan apakah role_id adalah 2 (untuk role_id lain, atur halaman yang sesuai)
+    if (role_id != 2) {
+        response.sendRedirect("../login.jsp");
+        return;
+    }
+--%>
+<%
+    // Mengecek apakah pengguna sudah login dan memiliki role_id yang sesuai
+    if (session.getAttribute("username") == null || session.getAttribute("role_id") == null) {
+        response.sendRedirect("../login.jsp");
+        return;
+    }
+
+    // Mendapatkan role_id dari sesi
     int role_id = (Integer) session.getAttribute("role_id");
 
     // Pengecekan apakah role_id adalah 2 (untuk role_id lain, atur halaman yang sesuai)
@@ -79,7 +95,7 @@
       <!-- partial -->
       <div class="main-panel">
         <!-- awal content -->  
-        <jsp:include page="pages/charts/donat-product.jsp" />
+        <jsp:include page="pages/charts/chartjs.jsp" />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <jsp:include page="partials/footer.jsp" />

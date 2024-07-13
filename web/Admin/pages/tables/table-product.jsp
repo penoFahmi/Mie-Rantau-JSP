@@ -8,6 +8,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, javax.servlet.*, javax.servlet.http.*" %>
 <%@page import="java.util.List"%>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  
 
 <%!
     private void displayProducts(JspWriter out, String query) throws IOException {
@@ -51,7 +53,7 @@
 
                     String photo = resultSet.getString("photo");
                     if (photo != null && !photo.isEmpty()) {
-                        out.println("<td><img src='images/" + photo + "' alt='" + resultSet.getString("nama") + "' style='width:100px;'/></td>");
+                        out.println("<td><img class='img-thumbnail' src='" + photo + "' alt='" + resultSet.getString("nama") + "''/></td>");
                     } else {
                         out.println("<td>No Image Available</td>");
                     }
