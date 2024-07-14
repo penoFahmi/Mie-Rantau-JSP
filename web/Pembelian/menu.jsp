@@ -84,6 +84,45 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <jsp:include page="actions/daftar-product.jsp"/>
     <!-- Konten 2 -->
     <!-- Akhir Konten 2 -->
+<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">   
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+        <i class="bi bi-cart-plus-fill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+             <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
+            </svg>
+        </i>
+    </button>
+</div>
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header bg-danger p-4">
+    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Pesanan</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+         <%-- Your Java servlet and HTML code here --%>
+        <jsp:include page="actions/isi-canvas.jsp"/>
+  </div>
+  <div class="offcanvas-body">
+         <%-- Your Java servlet and HTML code here 
+        <jsp:include page="actions/transaksi.jsp"/>--%>
+  </div>
+  
+<div class="footer bg-warning text-body-secondary p-3">
+    <a type="button" class="btn btn-primary" href="proses-transaksi.jsp">
+        <i class="bi bi-cart-check-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708"/>
+        </svg>
+        </i>
+    </a>
+</div>
+
+</div> 
+    
+    
+    
+    
+    
     <audio autoplay loop src="audio/"></audio>
     <!-- Footer -->
     <jsp:include page="partial/footer.jsp"/>

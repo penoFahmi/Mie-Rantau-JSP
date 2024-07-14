@@ -5,17 +5,24 @@
         <group>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/login.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/Pembelian/partial/footer.jsp</file>
+            <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/Pembelian/actions/isi-canvas.jsp</file>
+            <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/register.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/META-INF/context.xml</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/Pembelian/menu.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/Pembelian/partial/navbar.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/SuperAdmin/logoutSuperAdmin.jsp</file>
+            <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/Pembelian/proses-update-keranjang.jsp</file>
+            <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/Pembelian/proses-delete-keranjang.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/Pembelian/keranjang.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/Pembelian/actions/daftar-product.jsp</file>
+            <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/prosesRegister.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/Pembelian/actions/proses-add-keranjang.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/contact.html</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/SuperAdmin/dashboard.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/logout.jsp</file>
             <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/index.html</file>
+            <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/menu.html</file>
+            <file>file:/C:/Users/Peno/Documents/4%20sem/PWL/MieRantau/web/about.html</file>
         </group>
     </open-files>
 </project-private>

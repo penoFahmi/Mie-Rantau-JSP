@@ -35,7 +35,7 @@
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="brand-logo">
-                <h1>Mie Rantau</h1>
+                  <h1><a href="index.html" class="text-danger">Mie <span class="text-warning">Rantau</span></a></h1>
               </div>
               <h4>Registrasi Pelanggan</h4>
               <form class="pt-3" method="POST" action="prosesRegister.jsp">

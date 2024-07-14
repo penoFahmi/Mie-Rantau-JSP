@@ -52,5 +52,5 @@
     if (!message.isEmpty()) {
         session.setAttribute("message", message);
     }
-    response.sendRedirect("keranjang.jsp");
+    response.sendRedirect("menu.jsp");
 %>

@@ -45,7 +45,9 @@
                                     <th>Harga</th>
                                     <th>Jumlah</th>
                                     <th>Total</th>
+                                    <!--
                                     <th>Tindakan</th>
+                                    -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,10 +60,12 @@
                                     <td>RP <%= resultSet.getBigDecimal("harga") %></td>
                                     <td><%= resultSet.getInt("quantity") %></td>
                                     <td>RP <%= resultSet.getBigDecimal("total") %></td>
+                                    <!--
                                     <td>
                                         <button type="button" class="btn btn-primary btn-rounded btn-fw">Terima</button>
                                         <button type="button" class="btn btn-danger btn-rounded btn-fw">Tolak</button>
                                     </td>
+                                    -->
                                 </tr>
                                 <%
                                     }
