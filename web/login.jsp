@@ -133,8 +133,10 @@
 
                             if (resultSet.next()) {
                                 int role_id = resultSet.getInt("role_id");
+                                int userId = resultSet.getInt("id"); // Mengambil user_id dari hasil query
                                 session.setAttribute("username", username);
                                 session.setAttribute("role_id", role_id);
+                                session.setAttribute("user_id", userId); // Menyimpan user_id dalam sesi
 
                                 String redirectUrl = "";
                                 switch (role_id) {

@@ -20,7 +20,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
-            <a href="../login.jsp" type="button" class="m-3 btn btn-primary">LogIn</a>
+            <a href="keranjang.jsp" type="button" class="m-3 btn btn-primary">Cart</a>
             <a href="../logout.jsp" type="button" class="m-3 btn btn-warning">LogOut</a>
           </div>
         </div>
