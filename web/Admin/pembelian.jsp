@@ -101,7 +101,7 @@
       <!-- partial -->
       <div class="main-panel">
         <!-- awal content -->  
-        <jsp:include page="pages/tables/table-pemesanan.jsp" />
+        <jsp:include page="pages/tables/table-pembelian.jsp" />
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <jsp:include page="partials/footer.jsp" />
@@ -132,6 +132,8 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <script src="js/Chart.roundedBarCharts.js"></script>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
   <!-- End custom js for this page-->
 </body>
 

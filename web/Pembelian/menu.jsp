@@ -78,7 +78,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <!-- Navbar -->
     <jsp:include page="partial/navbar.jsp"/>
     <!-- Akhir Navbar -->
-
+    <div  class="container">
     <!-- Konten 1 -->
     <!-- Akhir Konten 1 -->
     <jsp:include page="actions/daftar-product.jsp"/>
@@ -101,10 +101,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
   <div class="offcanvas-body">
          <%-- Your Java servlet and HTML code here --%>
         <jsp:include page="actions/isi-canvas.jsp"/>
-  </div>
-  <div class="offcanvas-body">
-         <%-- Your Java servlet and HTML code here 
-        <jsp:include page="actions/transaksi.jsp"/>--%>
+         <%-- Your Java servlet and HTML code here --%>
   </div>
   
 <div class="footer bg-warning text-body-secondary p-3">
@@ -119,11 +116,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
 </div> 
     
-    
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Riwayat Pembelian</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+        <jsp:include page="actions/riwayat-pembelian.jsp"/>
+  </div>
+</div>    
     
     
     
     <audio autoplay loop src="audio/"></audio>
+    </div> 
     <!-- Footer -->
     <jsp:include page="partial/footer.jsp"/>
     <!-- Footer Akhir -->

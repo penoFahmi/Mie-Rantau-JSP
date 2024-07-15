@@ -60,10 +60,12 @@
                             <label for="exampleInputAlamat1">Alamat</label>
                             <input type="text" class="form-control" id="exampleInputAlamat1" value="<%= alamat %>" readonly>
                         </div>
+                        <!--
                         <form action="updateAdmin.jsp" method="get">
                             <input type="hidden" name="id" value="<%= id %>">
                             <button type="submit" class="btn btn-primary me-2">Edit</button>
                         </form>
+                        --> 
                         <hr>
                         <% 
                             } 

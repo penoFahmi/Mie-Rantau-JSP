@@ -144,7 +144,7 @@
                                         redirectUrl = "SuperAdmin/dashboard.jsp";
                                         break;
                                     case 2:
-                                        redirectUrl = "Admin/dashboard.jsp";
+                                        redirectUrl = "Admin/product.jsp";
                                         break;
                                     case 3:
                                         redirectUrl = "Pembelian/menu.jsp";

@@ -22,7 +22,7 @@
             <div class="card-body">
                 <h4 class="card-title">Tambah Product</h4>
                 <p class="card-description">
-                    Basic form layout
+                    Apa ada Menu Baru
                 </p>
                 <form class="forms-sample" action="createProduct.jsp" method="post" enctype="multipart/form-data">
                     <%

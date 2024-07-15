@@ -32,16 +32,13 @@
         connection.setAutoCommit(false); // Start transaction
 
         // Insert into transactions table
-        String insertTransaksiSQL = "INSERT INTO transactions (customer_name, quantity, total_price, user_id, product_id, transaction_date) " +
-                                    "SELECT ?, k.quantity, (k.quantity * p.harga), ?, k.product_id, NOW() " +
+        String insertTransaksiSQL = "INSERT INTO transactions (quantity, total_price, user_id, product_id, transaction_date) " +
+                                    "SELECT k.quantity, (k.quantity * p.harga), ?, k.product_id, NOW() " +
                                     "FROM keranjang k JOIN product p ON k.product_id = p.id WHERE k.user_id = ?";
         insertTransaksiStmt = connection.prepareStatement(insertTransaksiSQL);
         
-        // Assuming customer name is obtained from the session or a form
-        String customerName = "Customer Name";  // Replace with actual customer name
-        insertTransaksiStmt.setString(1, customerName);
+        insertTransaksiStmt.setInt(1, userId);
         insertTransaksiStmt.setInt(2, userId);
-        insertTransaksiStmt.setInt(3, userId);
 
         insertTransaksiStmt.executeUpdate();
 

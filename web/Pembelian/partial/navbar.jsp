@@ -20,6 +20,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
+              
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Profile
+                </button>
+                <ul class="dropdown-menu bg-warning">
+                  <li><a href="../logout.jsp" class="dropdown-item" href="#">Logout</a></li>
+                  <li>
+                      <a class="dropdown-item" href="#">
+                          <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Riwayat Pembelian</button>
+                      </a>
+                  </li>
+                </ul>
+              </div>  
+            <!--  
             <a href="../logout.jsp" type="button" class="m-3 btn btn-warning">
                 <i class="bi bi-box-arrow-right">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
@@ -28,6 +43,7 @@
                     </svg>
                 </i>
             </a>
+            -->
           </div>
         </div>
       </div>

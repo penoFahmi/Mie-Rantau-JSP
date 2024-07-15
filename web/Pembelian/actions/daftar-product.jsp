@@ -30,6 +30,9 @@
                     out.println("<div class='col-sm-3 mb-3 mb-sm-0 mt-3'>");
                     out.println("<div class='card' style='width: 18rem;'>");
 
+                    //out.println("<div class='col-sm-3 mb-3 mb-sm-0 mt-3'>");
+                    //out.println("<div class='card' style='width: 18rem;'>");
+
                     String photo = resultSet.getString("photo");
                     if (photo != null && !photo.isEmpty()) {
                         out.println("<img src='../Admin/" + photo + "' class='card-img-top' alt='" + resultSet.getString("nama") + "'>");

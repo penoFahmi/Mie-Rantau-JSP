@@ -13,10 +13,10 @@
             </button>
         </div>
         <div>
-            <a class="navbar-brand brand-logo" href="dashboard.jsp">
+            <a class="navbar-brand brand-logo" href="product.jsp">
                 <h3>Mie Rantau</h3>
             </a>
-            <a class="navbar-brand brand-logo-mini" href="dashboard.jsp">
+            <a class="navbar-brand brand-logo-mini" href="product.jsp">
                 <h5>M</h5>
             </a>
         </div>
